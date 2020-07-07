@@ -1,0 +1,30 @@
+---
+:source:
+  :path: test
+  :file: test_DoubleLinkedList.c
+:successes:
+- :test: test_DoubleLinkedListAddItemToHead_given_item2_expect_head_points_item2_and_tail_points_item1_both_item1next_item2prev_points_to_null
+  :line: 12
+  :message: ''
+  :unity_test_time: 0
+- :test: test_DoubleLinkedListAddItemToTail_given_item2_expect_tail_points_item2_and_head_points_item1_both_item2next_item1prev_points_to_null
+  :line: 34
+  :message: ''
+  :unity_test_time: 0
+- :test: test_DoubleLinkedListRemoveItemFromHead_given_item2_expect_LastItem_to_be_remove_from_head_of_linked_list_order_21
+  :line: 54
+  :message: ''
+  :unity_test_time: 0
+- :test: test_DoubleLinkedListRemoveItemFromHead_given_item2_expect_LastItem_to_be_remove_from_head_of_linked_list_order_12
+  :line: 87
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 4
+  :passed: 4
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 0.019088000000920147
