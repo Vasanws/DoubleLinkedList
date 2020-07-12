@@ -19,16 +19,28 @@
   :line: 145
   :message: ''
   :unity_test_time: 0
-:failures:
 - :test: test_DoubleLinkedListRemoveItemfromHead_given_item2_expect_itemRemoved_of_item2_head_and_tail_points_to_item1
-  :line: 193
-  :message: Expected 0x000000000063FDA0 Was 0x0000000000000000
+  :line: 183
+  :message: ''
   :unity_test_time: 0
+- :test: test_DoubleLinkedListRemoveItemToTail_given_list_contains_no_item_expect_function_to_return_null
+  :line: 226
+  :message: ''
+  :unity_test_time: 0
+- :test: test_DoubleLinkedListRemoveItemToTail_given_item1_expect_no_item_function_to_return_null
+  :line: 255
+  :message: ''
+  :unity_test_time: 0
+- :test: test_DoubleLinkedListRemoveItemToTail_given_item2_expect_itemRemoved_of_item2_head_and_tail_points_to_item1
+  :line: 294
+  :message: ''
+  :unity_test_time: 0
+:failures: []
 :ignores: []
 :counts:
-  :total: 5
-  :passed: 4
-  :failed: 1
+  :total: 8
+  :passed: 8
+  :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.03616719999990892
+:time: 0.01664359999995213

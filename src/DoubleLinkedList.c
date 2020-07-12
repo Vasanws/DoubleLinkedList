@@ -25,56 +25,54 @@ int doubleLinkedListAddItemToTail(DoubleLinkedList *listTail,ListItem *itemTail)
 ListItem *doubleLinkedListRemoveItemFromHead(DoubleLinkedList *listPtr)
 {
   ListItem *itemLast;
-  
-  if(listPtr->head == NULL)
+ 
+  if(listPtr->head == NULL)                 //check for item remove
   {
-    listPtr->count = 0;
-    return NULL;
-  }
+    return NULL;                           //no item remove return to NULL
+  } 
   else
-  {
-    itemLast = listPtr->head;
-    listPtr->head = itemLast->next;
-      if(listPtr->head == NULL)
+    {
+      itemLast = listPtr->head;           //itemLast points to the item about to remove
+      listPtr->head = itemLast->next;     //remove item from head at this line
+    }
+      if(listPtr->head == NULL)           //if head no item, tail point to NULL
       {
         listPtr->tail = NULL;
       }
       else
       {
-        (listPtr->head)->prev = NULL;
-      }
+        (listPtr->head)->prev = NULL;   //check next and prev remove item point to NULL
       itemLast->next = NULL;
       itemLast->prev = NULL;
-      listPtr->count -= 1;
-  }
-  return itemLast;
+      listPtr->count -=1;             //decrement count when item remove
+      }
+    return itemLast;                  //itemLast return 
 }
 
 ListItem *doubleLinkedListRemoveItemToTail(DoubleLinkedList *listPtr)
 {
   ListItem *itemLast;
-  
-  if(listPtr->tail == NULL)
+ 
+  if(listPtr->tail == NULL)               //check for item remove
   {
-    listPtr->count = 0;
-    return NULL;
-  }
+    return NULL;                          //no item remove return to NULL
+  } 
   else
-  {
-    itemLast = listPtr->tail;
-    listPtr->tail = itemLast->next;
+    {
+      itemLast = listPtr->tail;           //itemLast points to the item about to remove
+      listPtr->tail = itemLast->prev;     //remove item from tail at this line
+    }
       if(listPtr->tail == NULL)
       {
-        listPtr->head = NULL;
+        listPtr->head = NULL;           //if tail no item, head point to NULL
       }
       else
       {
-        (listPtr->tail)->prev = NULL;
-      }
+        (listPtr->tail)->next = NULL;   //check next and prev remove item point to NULL
       itemLast->next = NULL;
       itemLast->prev = NULL;
-      listPtr->count -= 1;
-  }
-  return itemLast;
+      listPtr->count -=1;               //decrement count when item remove
+      }
+    return itemLast;                    //itemLast return 
 }
 

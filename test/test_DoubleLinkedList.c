@@ -115,12 +115,12 @@ void test_DoubleLinkedListAddItemToTail_given_item2_expect_tail_points_item2_and
 void test_DoubleLinkedListRemoveItemfromHead_given_list_contains_no_item_expect_function_to_return_null()
 {
  //initialize
- ListItem *itemRemoved;
+ ListItem *itemRemove;
  DoubleLinkedList list={NULL,NULL,0};                       //list contains empty item
  
- itemRemoved = doubleLinkedListRemoveItemFromHead(&list);   //keep removing item although no items left
+ itemRemove = doubleLinkedListRemoveItemFromHead(&list);   //keep removing item although no items left
  //test the linked list
- TEST_ASSERT_EQUAL(NULL, itemRemoved);                      //check for removed item
+ TEST_ASSERT_EQUAL(NULL, itemRemove);                      //check for removed item
  TEST_ASSERT_EQUAL(NULL, list.head);                             //check head does not point to item
  TEST_ASSERT_EQUAL(NULL, list.tail);                             //check tail does not point to item
  TEST_ASSERT_EQUAL(0, list.count);                          //check decrement to zero
@@ -157,7 +157,7 @@ void test_DoubleLinkedListRemoveItemfromHead_given_item1_expect_no_item_function
   TEST_ASSERT_EQUAL(NULL, list.head);
   TEST_ASSERT_EQUAL(NULL, list.tail);
   //check counter decrement
-  TEST_ASSERT_EQUAL(0, list.count);
+  TEST_ASSERT_EQUAL(1, list.count);
   //remove value in data
   TEST_ASSERT_EQUAL(22, itemRemove->data);
 }
@@ -187,19 +187,24 @@ void test_DoubleLinkedListRemoveItemfromHead_given_item2_expect_itemRemoved_of_i
   ListItem    item2={NULL,NULL,11};
   DoubleLinkedList	list={&item2,&item1,2};
   
+  //declare items to address of item
+  item1.prev = &item2;
+  item2.next = &item1;
+  
   itemRemove = doubleLinkedListRemoveItemFromHead(&list);
   //Test linked remove item2 from head
   TEST_ASSERT_EQUAL(&item2, itemRemove);
-  TEST_ASSERT_EQUAL_PTR(&item1, list.head); //test fail
-  TEST_ASSERT_EQUAL_PTR(&item1, list.tail);
-  TEST_ASSERT_EQUAL(NULL, &item2);
-  TEST_ASSERT_EQUAL(NULL, &item2);
   TEST_ASSERT_EQUAL(NULL, itemRemove->next);
   TEST_ASSERT_EQUAL(NULL, itemRemove->prev);
-  //check counter decrement
-  TEST_ASSERT_EQUAL(1, list.count);
   //remove data value
   TEST_ASSERT_EQUAL(11, itemRemove->data);
+  //check counter decrement
+  TEST_ASSERT_EQUAL(1, list.count);
+  //head point to item1
+  TEST_ASSERT_EQUAL_PTR(&item1, list.head);
+  TEST_ASSERT_EQUAL_PTR(&item1, list.tail);
+  TEST_ASSERT_EQUAL(NULL, item1.prev);
+  TEST_ASSERT_EQUAL(NULL, item1.next);
 }
 
  /*
@@ -218,21 +223,19 @@ void test_DoubleLinkedListRemoveItemfromHead_given_item2_expect_itemRemoved_of_i
   *the functions return the items to NULL
 */
 
-/*void test_DoubleLinkedListRemoveItemToTail_given_list_contains_no_item_expect_function_to_return_null()
+void test_DoubleLinkedListRemoveItemToTail_given_list_contains_no_item_expect_function_to_return_null()
 {
  //initialize
- ListItem *itemRemoved;
+ ListItem *itemRemove;
  DoubleLinkedList list={NULL,NULL,0};                       //list contains empty item
  
- itemRemoved = doubleLinkedListRemoveItemToTail(&list);   //keep removing item although no items left
+ itemRemove = doubleLinkedListRemoveItemToTail(&list);   //keep removing item although no items left
  //test the linked list
- TEST_ASSERT_EQUAL(NULL, itemRemoved);                      //check for removed item
- TEST_ASSERT_EQUAL(NULL, head);                             //check head does not point to item
- TEST_ASSERT_EQUAL(NULL, tail);                             //check tail does not point to item
+ TEST_ASSERT_EQUAL(NULL, itemRemove);                      //check for removed item
+ TEST_ASSERT_EQUAL(NULL, list.head);                        //check head does not point to item
+ TEST_ASSERT_EQUAL(NULL, list.tail);                        //check tail does not point to item
  TEST_ASSERT_EQUAL(0, list.count);                          //check decrement to zero
 }
-*/
-
 /*
  *Remove item1 to tail
  *Before:
@@ -249,35 +252,35 @@ void test_DoubleLinkedListRemoveItemfromHead_given_item2_expect_itemRemoved_of_i
   List
      |Tail| ---> NULL
 */
-/*void test_DoubleLinkedListRemoveItemToTail_given_item1_expect_no_item_function_to_return_null()
+void test_DoubleLinkedListRemoveItemToTail_given_item1_expect_no_item_function_to_return_null()
 {
   //initialize item and list
-  ListItem *itemRemoved;
+  ListItem *itemRemove;
   ListItem    item1={NULL,NULL,22};
   DoubleLinkedList	list={&item1,&item1,1};
   
-  itemRemoved = doubleLinkedListRemoveItemToTail(&list); 
-  //Test linked list remove item1 to tail
-  TEST_ASSERT_EQUAL(&item1, itemRemoved);
-  TEST_ASSERT_EQUAL(NULL, itemRemoved->next;
+  itemRemove = doubleLinkedListRemoveItemToTail(&list); 
+  //Test linked list remove item1 from head
+  TEST_ASSERT_EQUAL(&item1, itemRemove);
+  TEST_ASSERT_EQUAL(NULL, itemRemove->next);
   TEST_ASSERT_EQUAL(NULL, itemRemove->prev);
   TEST_ASSERT_EQUAL(NULL, list.head);
   TEST_ASSERT_EQUAL(NULL, list.tail);
   //check counter decrement
-  TEST_ASSERT_EQUAL(0, list.count);
+  TEST_ASSERT_EQUAL(1, list.count);
   //remove value in data
   TEST_ASSERT_EQUAL(22, itemRemove->data);
 }
-*/
+
 
 /*
  *Remove item2 to tail
  *Before:
     count = 2
-    |Head|  ------> item2       item1
+    |Head|  ------> item1       item2
                     next -----> next ----> NULL
-            NULL<---prev------> prev
-    |Tail|           11          ^  22
+            NULL<---prev<------ prev
+    |Tail|           22          ^  11
          |_______________________|
 
   *After removing
@@ -288,26 +291,33 @@ void test_DoubleLinkedListRemoveItemfromHead_given_item2_expect_itemRemoved_of_i
     |Tail|           ^  22
          |___________|
 */
-/*void test_DoubleLinkedListRemoveItemToHead_given_item2_expect_itemRemoved_of_item2_head_and_tail_points_to_item1()
+void test_DoubleLinkedListRemoveItemToTail_given_item2_expect_itemRemoved_of_item2_head_and_tail_points_to_item1()
 {
-  ListItem *itemRemoved;
+  ListItem *itemRemove;
   ListItem    item1={NULL,NULL,22};
-  ListItem    item2={NULL,NULL,11}
-  DoubleLinkedList	list={&item2,&item1,2};
+  ListItem    item2={NULL,NULL,11};
+  DoubleLinkedList	list={&item1,&item2,2};
   
-  itemRemoved = doubleLinkedListRemoveItemFromHead(&list);
-  //Test linked remove item2 to tail
-  TEST_ASSERT_EQUAL(&item2, itemRemoved);
-  TEST_ASSERT_EQUAL(&item1, list.head);
-  TEST_ASSERT_EQUAL(&item1, list.tail);
-  TEST_ASSERT_EQUAL(NULL, itemRemoved->next);
-  TEST_ASSERT_EQUAL(NULL, itemRemoved->tail);
+  //declare items to address of item
+  item1.next = &item2;
+  item2.prev = &item1;
+  
+  itemRemove = doubleLinkedListRemoveItemToTail(&list);
+  //Test linked remove item2 from tail
+  TEST_ASSERT_EQUAL(&item2, itemRemove);
+  TEST_ASSERT_EQUAL(NULL, itemRemove->next);
+  TEST_ASSERT_EQUAL(NULL, itemRemove->prev);
+  //remove data value
+  TEST_ASSERT_EQUAL(11, itemRemove->data);
+  //check counter decrement
   TEST_ASSERT_EQUAL(1, list.count);
-  TEST_ASSERT_EQUAL(11, itemRemoved->data);
-  TEST_ASSERT_EQUAL(NULL, item2->next);
-  TEST_ASSERT_EQUAL(NULL, item2->prev);
+  //tail point to item1
+  TEST_ASSERT_EQUAL_PTR(&item1, list.head);
+  TEST_ASSERT_EQUAL_PTR(&item1, list.tail);
+  TEST_ASSERT_EQUAL(NULL, item1.next);
+  TEST_ASSERT_EQUAL(NULL, item1.prev);
 }
-*/
+
 
   
   
